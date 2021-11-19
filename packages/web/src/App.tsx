@@ -1,24 +1,24 @@
-import React, { useMemo, useState, useEffect, useRef } from 'react';
-import { useSelector } from 'react-redux';
+import React, { useMemo, useState, useEffect, useRef } from "react";
+import { useSelector } from "react-redux";
 
-import './styles/normalize.less';
-import './styles/iconfont.less';
+import "./styles/normalize.less";
+import "./styles/iconfont.less";
 
-import { isMobile } from '@fiora/utils/ua';
-import inobounce from './utils/inobounce';
-import { getOSSFileUrl } from './utils/uploadFile';
+import { isMobile } from "@fiora/utils/ua";
+import inobounce from "./utils/inobounce";
+import { getOSSFileUrl } from "./utils/uploadFile";
 
-import Style from './App.less';
-import { State } from './state/reducer';
-import LoginAndRegister from './modules/LoginAndRegister/LoginAndRegister';
-import Sidebar from './modules/Sidebar/Sidebar';
-import FunctionBarAndLinkmanList from './modules/FunctionBarAndLinkmanList/FunctionBarAndLinkmanList';
-import UserInfo from './modules/UserInfo';
-import GroupInfo from './modules/GroupInfo';
-import { ShowUserOrGroupInfoContext } from './context';
-import Chat from './modules/Chat/Chat';
-import globalStyles from './globalStyles';
-import InviteInfo from './modules/InviteInfo';
+import Style from "./App.less";
+import { State } from "./state/reducer";
+import LoginAndRegister from "./modules/LoginAndRegister/LoginAndRegister";
+import Sidebar from "./modules/Sidebar/Sidebar";
+import FunctionBarAndLinkmanList from "./modules/FunctionBarAndLinkmanList/FunctionBarAndLinkmanList";
+import UserInfo from "./modules/UserInfo";
+import GroupInfo from "./modules/GroupInfo";
+import { ShowUserOrGroupInfoContext } from "./context";
+import Chat from "./modules/Chat/Chat";
+import globalStyles from "./globalStyles";
+import InviteInfo from "./modules/InviteInfo";
 
 /**
  * 获取窗口宽度百分比
@@ -57,11 +57,11 @@ function getHeightPercent() {
 function App() {
     const isReady = useSelector((state: State) => state.status.ready);
     const backgroundImageUrl = useSelector(
-        (state: State) => state.status.backgroundImage,
+        (state: State) => state.status.backgroundImage
     );
     const backgroundImage = isReady
         ? getOSSFileUrl(backgroundImageUrl, `image/quality,q_95`)
-        : '#';
+        : "#";
     const $app = useRef(null);
 
     // 计算窗口高度/宽度百分比
@@ -80,7 +80,7 @@ function App() {
     // 获取底图尺寸
     const [backgroundWidth, setBackgroundWidth] = useState(window.innerWidth);
     const [backgroundHeight, setBackgroundHeight] = useState(
-        window.innerHeight,
+        window.innerHeight
     );
     useEffect(() => {
         const img = new Image();
@@ -96,9 +96,9 @@ function App() {
         () => ({
             backgroundImage: `url(${backgroundImage})`,
             backgroundSize: `${backgroundWidth}px ${backgroundHeight}px`,
-            backgroundRepeat: 'no-repeat',
+            backgroundRepeat: "no-repeat",
         }),
-        [backgroundImage, backgroundWidth, backgroundHeight],
+        [backgroundImage, backgroundWidth, backgroundHeight]
     );
 
     // 聊天窗口样式
@@ -109,18 +109,19 @@ function App() {
             left: `${((1 - width) / 2) * 100}%`,
             top: `${((1 - height) / 2) * 100}%`,
         }),
-        [width, height],
+        [width, height]
     );
 
     // 模糊背景样式
     const blurStyle = useMemo(
         () => ({
-            backgroundPosition: `${(-(1 - width) * window.innerWidth) /
-                2}px ${(-(1 - height) * window.innerHeight) / 2}px`,
+            backgroundPosition: `${(-(1 - width) * window.innerWidth) / 2}px ${
+                (-(1 - height) * window.innerHeight) / 2
+            }px`,
             ...style,
             ...childStyle,
         }),
-        [width, height, style, childStyle],
+        [width, height, style, childStyle]
     );
 
     const [userInfoDialog, toggleUserInfoDialog] = useState(false);
@@ -140,7 +141,7 @@ function App() {
                 toggleGroupInfoDialog(true);
             },
         }),
-        [],
+        []
     );
 
     if (!isReady) {
@@ -156,7 +157,7 @@ function App() {
             <div className={Style.blur} style={blurStyle} />
             <div className={Style.child} style={childStyle}>
                 <ShowUserOrGroupInfoContext.Provider
-                    value={(contextValue as unknown) as null}
+                    value={contextValue as unknown as null}
                 >
                     <Sidebar />
                     <FunctionBarAndLinkmanList />

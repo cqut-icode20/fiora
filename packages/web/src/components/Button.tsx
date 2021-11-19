@@ -1,6 +1,6 @@
-import React from 'react';
+import React from "react";
 
-import { css } from 'linaria';
+import { css } from "linaria";
 
 const button = css`
     border: none;
@@ -27,15 +27,15 @@ type Props = {
 };
 
 function Button({
-    type = 'primary',
+    type = "primary",
     children,
-    className = '',
+    className = "",
     onClick,
 }: Props) {
     return (
         <button
             className={`${button} ${type} ${className}`}
-            type="button"
+            type='button'
             onClick={onClick}
         >
             {children}
