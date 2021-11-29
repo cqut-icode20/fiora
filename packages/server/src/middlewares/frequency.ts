@@ -1,13 +1,13 @@
-import { Socket } from 'socket.io';
+import { Socket } from "socket.io";
 import {
     getNewUserKey,
     getSealUserKey,
     Redis,
-} from '@fiora/database/redis/initRedis';
+} from "@fiora/database/redis/initRedis";
 
-export const CALL_SERVICE_FREQUENTLY = '发消息过于频繁, 请冷静一会再试';
+export const CALL_SERVICE_FREQUENTLY = "发消息过于频繁, 请冷静一会再试";
 export const NEW_USER_CALL_SERVICE_FREQUENTLY =
-    '发消息过于频繁, 你还处于萌新期, 不要恶意刷屏, 先冷静一会再试';
+    "发消息过于频繁, 你还处于萌新期, 不要恶意刷屏, 先冷静一会再试";
 
 const MaxCallPerMinutes = 20;
 const NewUserMaxCallPerMinutes = 5;
@@ -31,7 +31,7 @@ export default function frequency(
         maxCallPerMinutes = MaxCallPerMinutes,
         newUserMaxCallPerMinutes = NewUserMaxCallPerMinutes,
         clearDataInterval = ClearDataInterval,
-    }: Options = {},
+    }: Options = {}
 ) {
     let callTimes: Record<string, number> = {};
 
@@ -41,7 +41,7 @@ export default function frequency(
     }, clearDataInterval);
 
     return async ([event, , cb]: MiddlewareArgs, next: MiddlewareNext) => {
-        if (event !== 'sendMessage') {
+        if (event !== "sendMessage") {
             next();
         } else {
             const socketId = socket.id;
@@ -56,7 +56,7 @@ export default function frequency(
                 await Redis.set(
                     getSealUserKey(socket.data.user),
                     socket.data.user,
-                    Redis.Minute * AutoSealDuration,
+                    Redis.Minute * AutoSealDuration
                 );
             } else if (count >= maxCallPerMinutes) {
                 // normal user limit
@@ -64,7 +64,7 @@ export default function frequency(
                 await Redis.set(
                     getSealUserKey(socket.data.user),
                     socket.data.user,
-                    Redis.Minute * AutoSealDuration,
+                    Redis.Minute * AutoSealDuration
                 );
             } else {
                 callTimes[socketId] = count + 1;

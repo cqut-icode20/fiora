@@ -1,4 +1,4 @@
-import ip from 'ip';
+import ip from "ip";
 
 const { env } = process;
 
@@ -10,20 +10,25 @@ export default {
     port: env.Port ? parseInt(env.Port, 10) : 9200,
 
     // mongodb address
-    database: env.Database || 'mongodb://localhost:27017/fiora',
+    database: env.Database || "mongodb://localhost:27017/fiora",
 
     redis: {
-        host: env.RedisHost || 'localhost',
+        host: env.RedisHost || "localhost",
         port: env.RedisPort ? parseInt(env.RedisPort, 10) : 6379,
+
+        // 添加 Redis 密码
+        opts: {
+            auth_pass: env.RedisPwd || "",
+        },
     },
 
     // jwt encryption secret
-    jwtSecret: env.JwtSecret || 'jwtSecret',
+    jwtSecret: env.JwtSecret || "jwtSecret",
 
     // Maximize the number of groups
     maxGroupsCount: env.MaxGroupCount ? parseInt(env.MaxGroupCount, 10) : 3,
 
-    allowOrigin: env.AllowOrigin ? env.AllowOrigin.split(',') : null,
+    allowOrigin: env.AllowOrigin ? env.AllowOrigin.split(",") : null,
 
     // token expires time
     tokenExpiresTime: env.TokenExpiresTime
@@ -31,26 +36,26 @@ export default {
         : 1000 * 60 * 60 * 24 * 30,
 
     // administrator user id
-    administrator: env.Administrator ? env.Administrator.split(',') : [],
+    administrator: env.Administrator ? env.Administrator.split(",") : [],
 
     /** 禁用注册功能 */
     disableRegister: env.DisableRegister
-        ? env.DisableRegister === 'true'
+        ? env.DisableRegister === "true"
         : false,
 
     /** disable user create new group */
     disableCreateGroup: env.DisableCreateGroup
-        ? env.DisableCreateGroup === 'true'
+        ? env.DisableCreateGroup === "true"
         : false,
 
     /** Aliyun OSS */
     aliyunOSS: {
-        enable: env.ALIYUN_OSS ? env.ALIYUN_OSS === 'true' : false,
-        accessKeyId: env.ACCESS_KEY_ID || '',
-        accessKeySecret: env.ACCESS_KEY_SECRET || '',
-        roleArn: env.ROLE_ARN || '',
-        region: env.REGION || '',
-        bucket: env.BUCKET || '',
-        endpoint: env.ENDPOINT || '',
+        enable: env.ALIYUN_OSS ? env.ALIYUN_OSS === "true" : false,
+        accessKeyId: env.ACCESS_KEY_ID || "",
+        accessKeySecret: env.ACCESS_KEY_SECRET || "",
+        roleArn: env.ROLE_ARN || "",
+        region: env.REGION || "",
+        bucket: env.BUCKET || "",
+        endpoint: env.ENDPOINT || "",
     },
 };
