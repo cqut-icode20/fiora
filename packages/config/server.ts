@@ -17,9 +17,7 @@ export default {
         port: env.RedisPort ? parseInt(env.RedisPort, 10) : 6379,
 
         // 添加 Redis 密码
-        opts: {
-            auth_pass: env.RedisPwd || "",
-        },
+        auth_pass: env.RedisPwd || "",
     },
 
     // jwt encryption secret
